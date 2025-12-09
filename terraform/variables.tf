@@ -4,7 +4,7 @@ variable "what2play_bucket_name" {
 }
 
 variable "domain_name" {
-  type    = string
+  type        = string
   description = "Domain name for the website"
-  default = "what2play.seanezell.com"
+  default     = "what2play.seanezell.com"
 }
