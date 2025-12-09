@@ -47,16 +47,16 @@ what2play-ai-prompts/       → Prompt library & examples (optional)
 ## Development Phases (No Deadline – Pure Side-Project Joy)
 
 ### Phase 0 – Setup
-- [:white_check_mark:] Create 4 GitHub repositories
-- [:white_check_mark:] Add AWS credentials as GitHub secrets
+- [ :white_check_mark: ] Create 4 GitHub repositories
+- [ :white_check_mark: ] Add AWS credentials as GitHub secrets
 - [ ] Draft architecture diagram (draw.io)
 
 ### Phase 1 – Infrastructure First
-- [:white_check_mark:] Route53 + CloudFront + S3 (what2play.seanezell.com)
-- [ ] Cognito User Pool + App Client + Hosted UI
+- [ :white_check_mark: ] Route53 + CloudFront + S3 (what2play.seanezell.com)
+- [ :white_check_mark: ] Cognito User Pool + App Client + Hosted UI
 - [ ] DynamoDB tables (Games, UserGames, Groups + GSIs)
 - [ ] API Gateway + Lambda proxy skeleton
-- [ ] GitHub Actions Terraform workflow
+- [ :white_check_mark: ] GitHub Actions Terraform workflow
 
 ### Phase 2 – Client MVP
 - [ ] Vite + React + TypeScript + Tailwind/MUI
