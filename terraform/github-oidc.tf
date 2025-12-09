@@ -44,7 +44,9 @@ resource "aws_iam_role_policy" "github_actions_terraform_policy" {
           "dynamodb:*",
           "cognito-idp:*",
           "iam:*",
-          "sts:GetCallerIdentity"
+          "sts:GetCallerIdentity",
+          "acm:*",
+          "cloudfront:*",
         ]
         Resource = "*"
       }
