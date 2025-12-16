@@ -38,5 +38,5 @@ resource "aws_cognito_user_pool_client" "what2play_cognito_userpool_client" {
   callback_urls                        = ["https://what2play.seanezell.com"]
   logout_urls                          = ["https://what2play.seanezell.com"]
   allowed_oauth_flows                  = ["code"]
-  allowed_oauth_scopes                 = ["email", "openid", "aws.cognito.signin.user.admin"]
+  allowed_oauth_scopes                 = ["email", "openid", "profile"]
 }
