@@ -21,7 +21,7 @@ resource "aws_iam_role" "github_actions_role" {
             "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
           }
           StringLike = {
-            "token.actions.githubusercontent.com:sub" = "repo:seanezell/what2play-infrastructure:ref:refs/heads/main"
+            "token.actions.githubusercontent.com:sub" = "repo:seanezell/what2play-*:ref:refs/heads/*"
           }
         }
       }
