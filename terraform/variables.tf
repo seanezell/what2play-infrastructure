@@ -8,3 +8,8 @@ variable "domain_name" {
   description = "Domain name for the website"
   default     = "what2play.seanezell.com"
 }
+
+variable "route53_zone_id" {
+    description = "Hosted Zone ID for seanezell.com (created in account-level infrastructure)"
+    type        = string
+}

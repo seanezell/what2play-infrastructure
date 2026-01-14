@@ -1,6 +1,6 @@
 # what2play records
 resource "aws_route53_record" "what2play" {
-    zone_id = aws_route53_zone.primary.zone_id
+    zone_id = var.route53_zone_id  # hosted zone ID for seanezell.com
     name    = "what2play"
     type    = "CNAME"
     ttl     = 300
@@ -8,7 +8,7 @@ resource "aws_route53_record" "what2play" {
 }
 
 resource "aws_route53_record" "what2play_login" {
-    zone_id = aws_route53_zone.primary.zone_id
+    zone_id = var.route53_zone_id  # hosted zone ID for seanezell.com
     name    = "what2play-login"
     type    = "CNAME"
     ttl     = 300
