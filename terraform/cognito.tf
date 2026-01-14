@@ -34,9 +34,10 @@ resource "aws_cognito_user_pool_client" "what2play_cognito_userpool_client" {
   supported_identity_providers         = ["COGNITO"]
   generate_secret                      = false
   explicit_auth_flows                  = ["ALLOW_USER_SRP_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
-  refresh_token_validity               = "30"
+  refresh_token_validity               = 30
   callback_urls                        = ["https://what2play.seanezell.com"]
   logout_urls                          = ["https://what2play.seanezell.com"]
   allowed_oauth_flows                  = ["code"]
   allowed_oauth_scopes                 = ["email", "openid", "profile"]
+  prevent_user_existence_errors        = "ENABLED"
 }
