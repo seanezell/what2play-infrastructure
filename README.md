@@ -29,9 +29,9 @@ Originally built ~10 years ago as a C# Discord bot. Rebuilt in 2025–2026 as a 
 | Real-time (future)  | AppSync GraphQL or polling              | Optional polish                               |
 
 ## Repository Layout (4 repos total)
-what2play-infrastructure/   → Terraform (all AWS resources)
+what2play-infrastructure/   → Terraform ()
 what2play-client/           → React frontend (S3/CloudFront)
-what2play-services/         → Node.js Lambda microservices (monorepo)
+what2play-services/         → Node.js Lambda microservices (APIGW & Lambdas)
 what2play-ai-prompts/       → Prompt library & examples (optional)
 
 
