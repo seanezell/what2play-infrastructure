@@ -29,9 +29,9 @@ Originally built ~10 years ago as a C# Discord bot. Rebuilt in 2025–2026 as a 
 | Real-time (future)  | AppSync GraphQL or polling              | Optional polish                               |
 
 ## Repository Layout (4 repos total)
-what2play-infrastructure/   → Terraform ()
-what2play-client/           → React frontend (S3/CloudFront)
-what2play-services/         → Node.js Lambda microservices (APIGW & Lambdas)
+what2play-infrastructure/   → Shared infrastructure (Cognito, S3, CloudFront, DNS)
+what2play-client/           → React frontend (deployed to S3/CloudFront)
+what2play-services/         → API Gateway + Lambda functions + DynamoDB tables
 what2play-ai-prompts/       → Prompt library & examples (optional)
 
 
@@ -54,8 +54,6 @@ what2play-ai-prompts/       → Prompt library & examples (optional)
 ### Phase 1 – Infrastructure First
 - :white_check_mark: Route53 + CloudFront + S3 (what2play.seanezell.com)
 - :white_check_mark: Cognito User Pool + App Client + Hosted UI
-- [ ] DynamoDB tables (Games, UserGames, Groups + GSIs)
-- [ ] API Gateway + Lambda proxy skeleton
 - :white_check_mark: GitHub Actions Terraform workflow
 
 ### Phase 2 – Client MVP
@@ -65,6 +63,8 @@ what2play-ai-prompts/       → Prompt library & examples (optional)
 - [ ] Deploy to S3/CloudFront
 
 ### Phase 3 – Backend Services
+- [ ] DynamoDB tables (Games, UserGames, Groups + GSIs)
+- [ ] API Gateway + Lambda functions
 - [ ] Games Service (IGDB search → Bedrock enrichment → store)
 - [ ] Users Service (manage weights)
 - [ ] Groups Service (create group + AI recommendation endpoint)
