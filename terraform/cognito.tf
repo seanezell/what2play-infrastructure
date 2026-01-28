@@ -3,12 +3,16 @@ resource "aws_cognito_user_pool" "what2play_cognito_userpool" {
   name                     = "what2play_Users"
   username_attributes      = ["email"]
   auto_verified_attributes = ["email"]
+  
+  admin_create_user_config {
+    allow_admin_create_user_only = false
+  }
   password_policy {
-    minimum_length                   = 8
-    require_lowercase                = true
-    require_numbers                  = true
+    minimum_length                   = 6
+    require_lowercase                = false
+    require_numbers                  = false
     require_symbols                  = false
-    require_uppercase                = true
+    require_uppercase                = false
     temporary_password_validity_days = 7
   }
   mfa_configuration = "OFF"
@@ -19,10 +23,17 @@ resource "aws_cognito_user_pool" "what2play_cognito_userpool" {
   device_configuration {
     device_only_remembered_on_user_prompt = true
   }
+
+  account_recovery_setting {
+    recovery_mechanism {
+      name     = "verified_email"
+      priority = 1
+    }
+  }
 }
 
 resource "aws_cognito_user_pool_domain" "what2play_userpool_domain" {
-  domain          = "what2play-login.seanezell.com"
+  domain          = "what2play-auth.seanezell.com"
   certificate_arn = data.aws_acm_certificate.issued.arn
   user_pool_id    = aws_cognito_user_pool.what2play_cognito_userpool.id
 }
@@ -33,10 +44,10 @@ resource "aws_cognito_user_pool_client" "what2play_cognito_userpool_client" {
   allowed_oauth_flows_user_pool_client = true
   supported_identity_providers         = ["COGNITO"]
   generate_secret                      = false
-  explicit_auth_flows                  = ["ALLOW_USER_SRP_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
+  explicit_auth_flows                  = ["ALLOW_USER_SRP_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_REFRESH_TOKEN_AUTH", "ALLOW_ADMIN_USER_PASSWORD_AUTH"]
   refresh_token_validity               = 30
-  callback_urls                        = ["https://what2play.seanezell.com"]
-  logout_urls                          = ["https://what2play.seanezell.com"]
+  callback_urls                        = ["https://what2play.seanezell.com", "https://what2play.seanezell.com/"]
+  logout_urls                          = ["https://what2play.seanezell.com", "https://what2play.seanezell.com/"]
   allowed_oauth_flows                  = ["code"]
   allowed_oauth_scopes                 = ["email", "openid", "profile"]
   prevent_user_existence_errors        = "ENABLED"
