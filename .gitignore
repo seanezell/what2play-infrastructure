@@ -1,6 +1,7 @@
 .vscode/
 *.code-workspace
 terraform/.terraform.lock.hcl
+*.zip
 
 # Local .terraform directories
 .terraform/

@@ -47,7 +47,9 @@ resource "aws_iam_role_policy" "github_actions_terraform_policy" {
           "sts:GetCallerIdentity",
           "acm:*",
           "cloudfront:*",
-          "route53:*"
+          "route53:*",
+          "lambda:*",
+          "logs:*"
         ]
         Resource = "*"
       }

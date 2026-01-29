@@ -9,10 +9,10 @@ resource "aws_cognito_user_pool" "what2play_cognito_userpool" {
   }
   password_policy {
     minimum_length                   = 6
-    require_lowercase                = false
-    require_numbers                  = false
+    require_lowercase                = true
+    require_numbers                  = true
     require_symbols                  = false
-    require_uppercase                = false
+    require_uppercase                = true
     temporary_password_validity_days = 7
   }
   mfa_configuration = "OFF"
@@ -29,6 +29,10 @@ resource "aws_cognito_user_pool" "what2play_cognito_userpool" {
       name     = "verified_email"
       priority = 1
     }
+  }
+
+  lambda_config {
+    post_confirmation = aws_lambda_function.post_confirmation.arn
   }
 }
 
