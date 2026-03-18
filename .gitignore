@@ -2,6 +2,7 @@
 *.code-workspace
 terraform/.terraform.lock.hcl
 *.zip
+node_modules/
 
 # Local .terraform directories
 .terraform/

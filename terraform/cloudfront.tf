@@ -14,13 +14,17 @@ data "aws_acm_certificate" "issued" {
   most_recent = true
 }
 
-resource "aws_cloudfront_origin_access_identity" "oai" {
-  comment = "Origin access identity for ${var.what2play_bucket_name}"
+resource "aws_cloudfront_origin_access_control" "what2play_oac" {
+  name                              = "what2play-oac"
+  description                       = "OAC for what2play-content bucket"
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"          # or "no-override" if you prefer
+  signing_protocol                  = "sigv4"
 }
 
-resource "aws_cloudfront_distribution" "website" {
+resource "aws_cloudfront_distribution" "what2play" {
   enabled             = true
-  comment             = "CloudFront for ${var.domain_name}"
+  comment             = "${var.domain_name}"
   price_class         = "PriceClass_100" # US, Canada
   default_root_object = "index.html"
   aliases             = [var.domain_name]
@@ -30,9 +34,7 @@ resource "aws_cloudfront_distribution" "website" {
     domain_name = "${var.what2play_bucket_name}.s3.us-west-2.amazonaws.com"
     origin_id   = local.origin_id
 
-    s3_origin_config {
-      origin_access_identity = aws_cloudfront_origin_access_identity.oai.cloudfront_access_identity_path
-    }
+    origin_access_control_id = aws_cloudfront_origin_access_control.what2play_oac.id
   }
 
   default_cache_behavior {

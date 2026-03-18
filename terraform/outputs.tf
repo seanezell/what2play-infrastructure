@@ -14,12 +14,12 @@ output "cognito_hosted_ui_domain" {
 }
 
 output "cloudfront_distribution_domain" {
-  value       = aws_cloudfront_distribution.website.domain_name
+  value       = aws_cloudfront_distribution.what2play.domain_name
   description = "CloudFront distribution domain name"
 }
 
 output "cloudfront_distribution_id" {
-  value       = aws_cloudfront_distribution.website.id
+  value       = aws_cloudfront_distribution.what2play.id
   description = "CloudFront distribution ID (for cache invalidation)"
 }
 

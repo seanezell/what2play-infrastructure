@@ -26,14 +26,17 @@ resource "aws_s3_bucket_policy" "allow_cloudfront" {
       {
         Sid    = "AllowCloudFrontServicePrincipalReadOnly"
         Effect = "Allow"
-        Principal = {
-          AWS = aws_cloudfront_origin_access_identity.oai.iam_arn
-        }
-        Action = ["s3:GetObject", "s3:ListBucket"]
+        Principal = { Service = "cloudfront.amazonaws.com" }
+        Action = ["s3:GetObject"]
         Resource = [
           "${aws_s3_bucket.what2play_s3_bucket.arn}",
           "${aws_s3_bucket.what2play_s3_bucket.arn}/*"
         ]
+        Condition = {
+          StringEquals = {
+            "AWS:SourceArn" = aws_cloudfront_distribution.what2play.arn
+          }
+        }
       }
     ]
   })
