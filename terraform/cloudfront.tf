@@ -82,7 +82,7 @@ resource "aws_cloudfront_distribution" "what2play" {
   }
 
   tags = {
-    Name = "website-cdn-${var.domain_name}"
+    Name = "${var.domain_name}"
     Env  = "prod"
   }
 }
