@@ -2,13 +2,8 @@ locals {
   origin_id = "s3-${var.what2play_bucket_name}"
 }
 
-provider "aws" {
-  alias  = "useast1"
-  region = "us-east-1"
-}
-
 data "aws_acm_certificate" "issued" {
-  provider    = aws.useast1
+  provider    = aws.global
   domain      = "*.seanezell.com"
   statuses    = ["ISSUED"]
   most_recent = true

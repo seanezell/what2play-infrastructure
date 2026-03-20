@@ -107,7 +107,7 @@ No requirements.
 |------|---------|
 | <a name="provider_archive"></a> [archive](#provider\_archive) | 2.7.1 |
 | <a name="provider_aws"></a> [aws](#provider\_aws) | 6.28.0 |
-| <a name="provider_aws.useast1"></a> [aws.useast1](#provider\_aws.useast1) | 6.28.0 |
+| <a name="provider_aws.global"></a> [aws.global](#provider\_aws.global) | 6.28.0 |
 
 ## Modules
 
@@ -143,6 +143,7 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Domain name for the website | `string` | `"what2play.seanezell.com"` | no |
+| <a name="input_dynamo_table_name"></a> [dynamo\_table\_name](#input\_dynamo\_table\_name) | Name of the DynamoDB table for storing game data | `string` | n/a | yes |
 | <a name="input_route53_zone_id"></a> [route53\_zone\_id](#input\_route53\_zone\_id) | Hosted Zone ID for seanezell.com (created in account-level infrastructure) | `string` | n/a | yes |
 | <a name="input_what2play_bucket_name"></a> [what2play\_bucket\_name](#input\_what2play\_bucket\_name) | S3 bucket used as the CloudFront origin | `string` | n/a | yes |
 

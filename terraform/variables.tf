@@ -13,3 +13,8 @@ variable "route53_zone_id" {
     description = "Hosted Zone ID for seanezell.com (created in account-level infrastructure)"
     type        = string
 }
+
+variable "dynamo_table_name" {
+  type        = string
+  description = "Name of the DynamoDB table for storing game data"
+}

@@ -47,7 +47,7 @@ async function createUserProfile(userId, username, email) {
     
     // Create username index record
     const usernameParams = {
-        TableName: 'what2play',
+        TableName: process.env.TABLE_NAME,
         Item: {
             PK: `USERNAME#${username.toLowerCase()}`,
             SK: `USER#${userId}`,

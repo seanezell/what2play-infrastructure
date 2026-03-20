@@ -29,7 +29,6 @@ resource "aws_s3_bucket_policy" "allow_cloudfront" {
         Principal = { Service = "cloudfront.amazonaws.com" }
         Action = ["s3:GetObject"]
         Resource = [
-          "${aws_s3_bucket.what2play_s3_bucket.arn}",
           "${aws_s3_bucket.what2play_s3_bucket.arn}/*"
         ]
         Condition = {

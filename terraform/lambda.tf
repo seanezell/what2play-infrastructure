@@ -19,6 +19,11 @@ resource "aws_lambda_function" "post_confirmation" {
   publish = true
 
   depends_on = [data.archive_file.lambda_zip]
+  environment {
+    variables = {
+      "TABLE_NAME": var.dynamo_table_name
+    }
+  }
 }
 
 # IAM role for Lambda
