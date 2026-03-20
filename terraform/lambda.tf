@@ -1,20 +1,24 @@
-# Lambda function for post-confirmation trigger
-resource "aws_lambda_function" "post_confirmation" {
-  filename         = "post-confirmation.zip"
-  function_name    = "what2play-post-confirmation"
-  role            = aws_iam_role.lambda_role.arn
-  handler         = "index.handler"
-  runtime         = "nodejs22.x"
-  timeout         = 30
-
-  depends_on = [data.archive_file.lambda_zip]
-}
-
 # Create zip file from Lambda code
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_dir  = "../lambdas/what2play-post-confirmation"
-  output_path = "post-confirmation.zip"
+  source_dir  = "${path.module}/../lambdas/what2play-post-confirmation"
+  output_file_mode = "0666"
+  output_path = "${path.module}/zip/post-confirmation.zip"
+}
+
+# Lambda function for post-confirmation trigger
+resource "aws_lambda_function" "post_confirmation" {
+  filename         = data.archive_file.lambda_zip.output_path
+  function_name    = "what2play-post-confirmation"
+  role            = aws_iam_role.lambda_role.arn
+  handler         = "index.handler"
+  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  runtime         = "nodejs22.x"
+  timeout         = 30
+  memory_size = 128
+  publish = true
+
+  depends_on = [data.archive_file.lambda_zip]
 }
 
 # IAM role for Lambda
