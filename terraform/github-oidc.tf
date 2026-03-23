@@ -175,6 +175,15 @@ resource "aws_iam_role_policy" "github_actions_terraform_policy" {
       },
       {
         Effect = "Allow"
+        Action = [
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:DeleteItem"
+        ]
+        Resource = "arn:aws:dynamodb:us-west-2:*:table/terraform_state"
+      },
+      {
+        Effect = "Allow"
         Action = ["sts:GetCallerIdentity"]
         Resource = "*"
       }
