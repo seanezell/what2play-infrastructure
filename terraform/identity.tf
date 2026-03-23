@@ -3,7 +3,7 @@ resource "aws_cognito_user_pool" "what2play_cognito_userpool" {
   name                     = "what2play_Users"
   username_attributes      = ["email"]
   auto_verified_attributes = ["email"]
-  
+
   admin_create_user_config {
     allow_admin_create_user_only = false
   }

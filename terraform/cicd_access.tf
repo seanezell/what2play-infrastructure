@@ -187,16 +187,10 @@ resource "aws_iam_role_policy" "github_actions_terraform_policy" {
         Resource = "arn:aws:dynamodb:us-west-2:*:table/terraform_state"
       },
       {
-        Effect = "Allow"
-        Action = ["sts:GetCallerIdentity"]
+        Effect   = "Allow"
+        Action   = ["sts:GetCallerIdentity"]
         Resource = "*"
       }
     ]
   })
 }
-
-# Output the role ARN to use in GitHub secrets
-# output "github_actions_role_arn" {
-#   value       = aws_iam_role.github_actions_role.arn
-#   description = "ARN of the IAM role for What2Play GitHub Actions"
-# }

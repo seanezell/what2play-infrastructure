@@ -1,34 +1,34 @@
 # Create zip file from Lambda code
 data "archive_file" "lambda_zip" {
-  type        = "zip"
-  source_dir  = "${path.module}/../lambdas/what2play-post-confirmation"
+  type             = "zip"
+  source_dir       = "${path.module}/../lambdas/what2play-post-confirmation"
   output_file_mode = "0666"
-  output_path = "${path.module}/zip/post-confirmation.zip"
+  output_path      = "${path.module}/zip/post-confirmation.zip"
 }
 
 # Lambda function for post-confirmation trigger
 resource "aws_lambda_function" "post_confirmation" {
   filename         = data.archive_file.lambda_zip.output_path
   function_name    = "what2play-post-confirmation"
-  role            = aws_iam_role.lambda_role.arn
-  handler         = "index.handler"
+  role             = aws_iam_role.lambda_role.arn
+  handler          = "index.handler"
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
-  runtime         = "nodejs22.x"
-  timeout         = 30
-  memory_size = 128
-  publish = true
+  runtime          = "nodejs22.x"
+  timeout          = 30
+  memory_size      = 128
+  publish          = true
 
   depends_on = [data.archive_file.lambda_zip]
   environment {
     variables = {
-      "TABLE_NAME": var.dynamo_table_name
+      "TABLE_NAME" = var.dynamo_table_name
     }
   }
 }
 
 resource "aws_cloudwatch_log_group" "logs" {
-    name = "/aws/lambda/${aws_lambda_function.post_confirmation.function_name}"
-    retention_in_days = 14
+  name              = "/aws/lambda/${aws_lambda_function.post_confirmation.function_name}"
+  retention_in_days = 14
 }
 
 # IAM role for Lambda

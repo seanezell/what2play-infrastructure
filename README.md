@@ -1,100 +1,72 @@
-# What 2 Play
+# What 2 Play Infrastructure
 
-A modern, serverless web app that finally ends the eternal group debate: **“What should we play tonight?”**  
-Friends register the games/activities they own, weight how much they want to play each one, join a temporary group — the app intelligently recommends the fairest, most exciting option for everyone.
+Infrastructure-as-code for the What 2 Play app, focused on shared cloud foundations: static hosting edge, auth, DNS, deployment access, and supporting trigger logic.
 
-Originally built ~10 years ago as a C# Discord bot. Rebuilt in 2025–2026 as a production-grade portfolio showcase.
+## Project Breadcrumbs
 
-## Why This Project Exists (Career & Portfolio Value)
+What 2 Play is split across multiple repos with distinct responsibilities:
 
-- 100% AWS serverless stack — my deepest expertise  
-- Full end-to-end ownership: auth → data modeling → IaC → CI/CD → AI augmentation  
-- Real user accounts & persistent data (not a toy demo)  
-- Live, shareable URL on my personal domain  
-- Deliberate growth edges (TypeScript, GitHub Actions, agentic AI) without over-engineering  
-- Perfect senior/lead interview artifact: “Tell me about a system you built from scratch”
+- [`what2play`](https://github.com/seanezell/what2play): pseudo-parent repo for high-level docs and portfolio entrypoint
+- [`what2play-infrastructure`](https://github.com/seanezell/what2play-infrastructure) (this repo): Terraform-managed shared AWS infrastructure
+- [`what2play-services`](https://github.com/seanezell/what2play-services): API Gateway + application Lambdas + service data resources
+- [`what2play-client`](https://github.com/seanezell/what2play-client): React web app
 
-## Tech Stack
+## What This Repo Owns
 
-| Layer               | Technology                              | Reason / Showcase Area                        |
-|---------------------|-----------------------------------------|-----------------------------------------------|
-| Frontend            | React + Vite + TypeScript (gradual)     | Core strength + modern growth signal          |
-| Hosting             | S3 + CloudFront                         | Same pattern as seanezell.com                 |
-| Auth                | Amazon Cognito User Pools + Hosted UI   | Production-grade identity                     |
-| Backend             | Node.js Lambda functions (API Gateway)  | Serverless microservices                      |
-| Database            | Amazon DynamoDB                         | NoSQL modeling expertise                      |
-| Infrastructure      | Terraform (single repo)                 | Full IaC — my strongest differentiator        |
-| CI/CD               | GitHub Actions                          | Leveling up from Azure DevOps                 |
-| AI Enrichment       | IGDB API + AWS Bedrock (Claude 3.5)     | Smart game metadata & recommendation engine   |
-| Real-time (future)  | AppSync GraphQL or polling              | Optional polish                               |
+- S3 + CloudFront hosting foundation for the web app domain
+- Route53 DNS records for app and auth subdomains
+- Cognito User Pool, app client, and hosted UI domain
+- Post-confirmation Cognito trigger Lambda packaging/deployment
+- IAM for Lambda runtime and GitHub Actions OIDC deploy role
+- Terraform remote state backend configuration (S3 + DynamoDB reference)
 
-## Repository Layout (4 repos total)
-what2play-infrastructure/   → Shared infrastructure (Cognito, S3, CloudFront, DNS)
-what2play-client/           → React frontend (deployed to S3/CloudFront)
-what2play-services/         → API Gateway + Lambda functions + DynamoDB tables
-what2play-ai-prompts/       → Prompt library & examples (optional)
+## Repository Structure
 
+- `terraform/`: root Terraform configuration for this stack
+- `lambdas/what2play-post-confirmation/`: Node.js Lambda source + unit tests
+- `.github/workflows/terraform-deploy.yml`: CI workflow that runs Lambda tests, then Terraform plan/apply
 
-## Architecture Highlights
+## Deployment and CI
 
-- Cognito → JWT → API Gateway authorizer → Lambdas
-- All business data in DynamoDB (optimized GSIs for fast group queries)
-- Game catalog enriched automatically via IGDB + Bedrock
-- Final group recommendation powered by Claude (replaces 10-year-old manual weighting logic)
-- Fully defined and deployed with Terraform
-- GitHub Actions for plan/apply + client deployment
+Deployments run via GitHub Actions in `.github/workflows/terraform-deploy.yml`:
 
-## Development Phases (No Deadline – Pure Side-Project Joy)
+1. Run unit tests for the Cognito post-confirmation Lambda
+2. Run `terraform fmt`, `terraform init`, `terraform validate`, and `terraform plan`
+3. Apply changes on `main`
 
-### Phase 0 – Setup
-- :white_check_mark: Create 4 GitHub repositories
-- :white_check_mark: Add AWS credentials as GitHub secrets
-- [ ] Draft architecture diagram (draw.io)
+### Workflow Triggers
 
-### Phase 1 – Infrastructure First
-- :white_check_mark: Route53 + CloudFront + S3 (what2play.seanezell.com)
-- :white_check_mark: Cognito User Pool + App Client + Hosted UI
-- :white_check_mark: GitHub Actions Terraform workflow
-
-### Phase 2 – Client MVP
-- [ ] Vite + React + TypeScript + Tailwind/MUI
-- [ ] Cognito auth flow (Hosted UI)
-- [ ] “My Games” page with weight slider
-- [ ] Deploy to S3/CloudFront
-
-### Phase 3 – Backend Services
-- [ ] DynamoDB tables (Games, UserGames, Groups + GSIs)
-- [ ] API Gateway + Lambda functions
-- [ ] Games Service (IGDB search → Bedrock enrichment → store)
-- [ ] Users Service (manage weights)
-- [ ] Groups Service (create group + AI recommendation endpoint)
-
-### Phase 4 – AI Magic
-- [ ] IGDB API integration
-- [ ] Bedrock → Claude for game blurbs and final group pick + explanation
-- [ ] Prompt library (gold for technical interviews)
-
-### Phase 5 – Polish & Portfolio
-- [ ] Real-time updates (optional)
-- [ ] PWA support
-- [ ] Case study + screenshots on seanezell.com
-- [ ] Project card with tech badges on main portfolio
-- [ ] Loom walkthrough video
-
-### Future Ideas (only if fun)
-- Discord/Slack bot integration
-- Veto + re-roll
-- Historical stats dashboard
+- Pushes to `main` when files change under `terraform/**` or `lambdas/**`
+- Manual `workflow_dispatch`
 
 ## Local Development
 
-(See individual repo READMEs — will be added as they’re built)
+### Terraform
+
+```bash
+cd terraform
+terraform init
+terraform fmt -recursive
+terraform validate
+terraform plan -var-file variables/terraform.tfvars -var "route53_zone_id=<YOUR_ZONE_ID>"
+```
+
+### Lambda Unit Tests
+
+```bash
+cd lambdas/what2play-post-confirmation
+npm install
+npm test
+```
+
+## Notes
+
+- Business APIs, domain logic, and DynamoDB application modeling are intentionally outside this repo and live in `what2play-services`.
+- Frontend app code and deployment concerns beyond shared infra live in `what2play-client`.
 
 ## License
 
-Private for portfolio use. Happy to open-source or share privately during interview processes.
-
-Built with React, Node.js, AWS, Terraform, and a lot of fun — Sean Ezell © 2025–2026
+Private portfolio project. Sharing details privately for interviews is welcome.
 
 <!-- BEGIN_TF_DOCS -->
 ## Requirements
