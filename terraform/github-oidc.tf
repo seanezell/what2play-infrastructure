@@ -89,6 +89,7 @@ resource "aws_iam_role_policy" "github_actions_terraform_policy" {
         Effect = "Allow"
         Action = [
           "acm:DescribeCertificate",
+          "acm:GetCertificate",
           "acm:ListCertificates",
           "acm:ListTagsForCertificate"
         ]
@@ -127,7 +128,8 @@ resource "aws_iam_role_policy" "github_actions_terraform_policy" {
           "iam:ListAttachedRolePolicies",
           "iam:TagRole",
           "iam:UntagRole",
-          "iam:GetOpenIDConnectProvider"
+          "iam:GetOpenIDConnectProvider",
+          "iam:ListOpenIDConnectProviders"
         ]
         Resource = "*"
       },
@@ -145,6 +147,7 @@ resource "aws_iam_role_policy" "github_actions_terraform_policy" {
           "lambda:ListVersionsByFunction",
           "lambda:PublishVersion",
           "lambda:TagResource",
+          "lambda:GetFunctionCodeSigningConfig",
           "lambda:ListTags"
         ]
         Resource = "*"
