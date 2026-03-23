@@ -148,7 +148,8 @@ resource "aws_iam_role_policy" "github_actions_terraform_policy" {
           "lambda:PublishVersion",
           "lambda:TagResource",
           "lambda:GetFunctionCodeSigningConfig",
-          "lambda:ListTags"
+          "lambda:ListTags",
+          "lambda:GetFunctionConfiguration"
         ]
         Resource = "*"
       },
