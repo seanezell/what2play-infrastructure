@@ -1,0 +1,12 @@
+---
+description: Lambda and CI expectations for infra trigger code
+globs: "{lambdas/**/*.js,.github/workflows/*.yml}"
+alwaysApply: false
+---
+
+# Lambda and CI Workflow
+
+- For `lambdas/what2play-post-confirmation`, keep a working unit test.
+- Update tests when Lambda behavior changes.
+- In workflow updates, ensure Lambda tests run before Terraform apply.
+- Keep README top section hand-authored, and keep the Terraform docs output block at the bottom.

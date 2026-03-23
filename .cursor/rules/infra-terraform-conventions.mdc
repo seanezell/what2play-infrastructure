@@ -1,0 +1,17 @@
+---
+description: Terraform conventions for what2play-infrastructure
+globs: terraform/**/*.tf
+alwaysApply: false
+---
+
+# Terraform Conventions
+
+- Keep resources grouped by context:
+  - `backend.tf`
+  - `app_edge.tf`
+  - `identity.tf`
+  - `compute.tf`
+  - `cicd_access.tf`
+- Run `terraform fmt -recursive` after Terraform edits.
+- Keep root Terraform simple and readable; avoid premature module extraction.
+- Treat changes to IAM, DNS, and auth resources as high-impact and call them out clearly.
