@@ -4,26 +4,13 @@ const { DynamoDBDocumentClient, PutCommand } = require('@aws-sdk/lib-dynamodb');
 const dynamoClient = DynamoDBDocumentClient.from(new DynamoDBClient());
 
 exports.handler = async (event) => {
-    console.log('Post-confirmation event:', JSON.stringify(event, null, 2));
+    const userId = event.request.userAttributes.sub;
+    const email = event.request.userAttributes.email;
+    const tempUsername = `user_${userId.substring(0, 8)}`;
     
-    try {
-        const userId = event.request.userAttributes.sub;
-        const email = event.request.userAttributes.email;
-        
-        // Generate temporary username from user ID
-        const tempUsername = `user_${userId.substring(0, 8)}`;
-        
-        // Create user profile
-        await createUserProfile(userId, tempUsername, email);
-        
-        console.log(`Profile created for user: ${userId}`);
-        return event;
-        
-    } catch (error) {
-        console.error('Error creating user profile:', error);
-        // Don't fail the registration process
-        return event;
-    }
+    // Create user profile
+    await createUserProfile(userId, tempUsername, email);
+    return event;
 };
 
 async function createUserProfile(userId, username, email) {

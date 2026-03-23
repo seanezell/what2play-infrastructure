@@ -9,12 +9,12 @@ variable "domain_name" {
   default     = "what2play.seanezell.com"
 }
 
-variable "route53_zone_id" {
-    description = "Hosted Zone ID for seanezell.com (created in account-level infrastructure)"
-    type        = string
-}
-
 variable "dynamo_table_name" {
   type        = string
   description = "Name of the DynamoDB table for storing game data"
+}
+
+variable "route53_zone_id" {
+  type        = string
+  description = "Hosted Zone ID for seanezell.com (created in account-level infrastructure)"
 }

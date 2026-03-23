@@ -26,6 +26,11 @@ resource "aws_lambda_function" "post_confirmation" {
   }
 }
 
+resource "aws_cloudwatch_log_group" "logs" {
+    name = "/aws/lambda/${aws_lambda_function.post_confirmation.function_name}"
+    retention_in_days = 14
+}
+
 # IAM role for Lambda
 resource "aws_iam_role" "lambda_role" {
   name = "what2play-post-confirmation-role"
