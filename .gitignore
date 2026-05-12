@@ -3,7 +3,7 @@
 terraform/.terraform.lock.hcl
 *.zip
 node_modules/
-working-instructions/
+tooling/
 
 # Local .terraform directories
 .terraform/
